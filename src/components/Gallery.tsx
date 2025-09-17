@@ -3,38 +3,33 @@ import { ChevronLeft, ChevronRight, X, Sparkles } from 'lucide-react';
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
-  const [currentView, setCurrentView] = useState<'before' | 'after'>('before');
 
   const transformations = [
     {
       id: 1,
-      before: "/dental-transform-1.png",
-      after: "/dental-transformation-3 (1).png",
+      image: "/dental-transform-1.png",
       title: "Complete Smile Makeover",
-      description: "Cosmetic dentistry with veneers and teeth whitening",
-      treatment: "Porcelain Veneers + Whitening"
+      description: "Comprehensive dental restoration with veneers and orthodontic treatment",
+      treatment: "Porcelain Veneers + Orthodontics"
     },
     {
       id: 2,
-      before: "/9fb749ed-4886-4b51-9bdf-35c8a3fa1fce.png",
-      after: "/dental-transformation-3 (1).png",
-      title: "Orthodontic Treatment",
-      description: "Invisalign treatment for perfectly aligned teeth",
-      treatment: "Invisalign Clear Aligners"
+      image: "/9fb749ed-4886-4b51-9bdf-35c8a3fa1fce.png",
+      title: "Cosmetic Dentistry Transformation",
+      description: "Professional teeth whitening and cosmetic bonding for a perfect smile",
+      treatment: "Teeth Whitening + Cosmetic Bonding"
     },
     {
       id: 3,
-      before: "/dental-transform-1.png",
-      after: "/9fb749ed-4886-4b51-9bdf-35c8a3fa1fce.png",
-      title: "Dental Restoration",
-      description: "Complete dental restoration with implants and crowns",
-      treatment: "Dental Implants + Crowns"
+      image: "/dental-transformation-3 (1).png",
+      title: "Orthodontic Treatment Success",
+      description: "Complete teeth alignment and bite correction with modern orthodontics",
+      treatment: "Orthodontic Treatment + Bite Correction"
     }
   ];
 
   const openModal = (index: number) => {
     setSelectedImage(index);
-    setCurrentView('before');
   };
 
   const closeModal = () => {
@@ -44,14 +39,12 @@ const Gallery = () => {
   const nextImage = () => {
     if (selectedImage !== null) {
       setSelectedImage((selectedImage + 1) % transformations.length);
-      setCurrentView('before');
     }
   };
 
   const prevImage = () => {
     if (selectedImage !== null) {
       setSelectedImage(selectedImage === 0 ? transformations.length - 1 : selectedImage - 1);
-      setCurrentView('before');
     }
   };
 
@@ -82,26 +75,17 @@ const Gallery = () => {
               onClick={() => openModal(index)}
             >
               <div className="relative">
-                <div className="grid grid-cols-2">
-                  <div className="relative">
-                    <img
-                      src={transformation.before}
-                      alt={`Before - ${transformation.title}`}
-                      className="w-full h-48 object-cover"
-                    />
-                    <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-medium">
-                      Before
-                    </div>
-                  </div>
-                  <div className="relative">
-                    <img
-                      src={transformation.after}
-                      alt={`After - ${transformation.title}`}
-                      className="w-full h-48 object-cover"
-                    />
-                    <div className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
-                      After
-                    </div>
+                <img
+                  src={transformation.image}
+                  alt={`Before and After - ${transformation.title}`}
+                  className="w-full h-64 object-cover"
+                />
+                <div className="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                  Before & After
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <div className="bg-white/90 text-gray-900 px-4 py-2 rounded-lg font-medium">
+                    Click to View Details
                   </div>
                 </div>
               </div>
@@ -177,33 +161,17 @@ const Gallery = () => {
             <div className="bg-white rounded-lg overflow-hidden">
               <div className="relative">
                 <img
-                  src={currentView === 'before' ? transformations[selectedImage].before : transformations[selectedImage].after}
-                  alt={`${currentView} - ${transformations[selectedImage].title}`}
-                  className="w-full h-96 object-cover"
+                  src={transformations[selectedImage].image}
+                  alt={`Before and After - ${transformations[selectedImage].title}`}
+                  className="w-full h-96 object-contain bg-gray-100"
                 />
                 
-                {/* Toggle Buttons */}
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                  <button
-                    onClick={() => setCurrentView('before')}
-                    className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                      currentView === 'before'
-                        ? 'bg-red-500 text-white'
-                        : 'bg-white text-gray-700 hover:bg-gray-100'
-                    }`}
-                  >
-                    Before
-                  </button>
-                  <button
-                    onClick={() => setCurrentView('after')}
-                    className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                      currentView === 'after'
-                        ? 'bg-green-500 text-white'
-                        : 'bg-white text-gray-700 hover:bg-gray-100'
-                    }`}
-                  >
-                    After
-                  </button>
+                {/* Before/After Labels */}
+                <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded text-sm font-medium">
+                  Before
+                </div>
+                <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded text-sm font-medium">
+                  After
                 </div>
               </div>
               
